@@ -231,9 +231,14 @@ func convertServiceNetworks(
 		if networkConfig.Name != "" {
 			target = networkConfig.Name
 		}
+		addrs := []string{}
+		if network != nil && network.Ipv4Address != "" {
+			addrs = append(addrs, network.Ipv4Address)
+		}
 		netAttachConfig := swarm.NetworkAttachmentConfig{
-			Target:  target,
-			Aliases: aliases,
+			Target:    target,
+			Aliases:   aliases,
+			Addresses: addrs,
 		}
 		// Only add default aliases to user defined networks. Other networks do
 		// not support aliases.
